@@ -1,0 +1,4 @@
+- get users cords from users browser and get cords
+- imput cords form browser into 'gov wether api' "https://api.weather.gov/points/{latitude},{longitude}" api
+- find propperties.forcast url form responce
+- get local weather from properties.perids.0 #first (0) is now
