@@ -19,8 +19,12 @@ function App() {
       <h1>Vite + React + panda</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
-          panda is {count}
+          + 1
         </button>
+         <button onClick={() => setCount((count) => count - 1)}>
+           - 1
+        </button>
+        {<p>Count is {count}</p>}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
