@@ -1,0 +1,4 @@
+- get users cords from users browser and get cords to get location we use "https://www.w3schools.com/jsref/prop_nav_geolocation.asp"
+- imput cords form browser into 'gov wether api' "https://api.weather.gov/points/{latitude},{longitude}" api
+- find propperties.forcast url form responce
+- get local weather from properties.perids.0 #first (0) is now
