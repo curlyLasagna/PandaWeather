@@ -1,27 +1,37 @@
 from flask import Flask, request, send_file
-from diffusers.pipelines.auto_pipeline import AutoPipelineForText2Image
+from diffusers import PixArtAlphaPipeline
+from transformers import T5EncoderModel
 import torch
 from io import BytesIO
 
 app = Flask(__name__)
 
+def generate_image(prompt:str) -> BytesIO:
+    model_id = "PixArt-alpha/PixArt-XL-2-1024-MS"
+    text_encoder = T5EncoderModel.from_pretrained(
+        model_id,
+        subfolder="text_encoder",
+        load_in_8bit=True,
+        device_map="auto",
+    )
+    pipe = PixArtAlphaPipeline.from_pretrained(
+        model_id,
+        text_encoder=text_encoder,
+        transformer=None,
+    ).to("cuda")
+    image = pipe(prompt=prompt).images[0]
+    img_io = BytesIO()
+    image.save(img_io, "PNG")
+    img_io.seek(0)
+    return img_io
 
 @app.route("/image", methods=["POST"])
-def generate_image():
+def return_image():
     prompt = request.get_json().get("prompt", "")
     if not prompt:
         return {"error": "Provide prompt"}, 400
 
-    pipeline = AutoPipelineForText2Image.from_pretrained(
-        "stabilityai/stable-diffusion-xl-base-1.0",
-        torch_dtype=torch.float16,
-        variant="fp16",
-    ).to("mps")
-    image = pipeline(prompt=prompt).images[0]
-    img_io = BytesIO()
-    image.save(img_io, "PNG")
-    img_io.seek(0)
-    return send_file(img_io, mimetype="image/png")
+    return send_file(generate_image(prompt), mimetype="image/png")
 
 
 def main():
