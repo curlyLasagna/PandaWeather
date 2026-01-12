@@ -58,7 +58,7 @@ function App() {
         setLoading(false);
       }
     }, (err) => {
-      setError('Location access denied or unavailable.');
+      setError(`Location access denied or unavailable. ${err.message}`);
       setLoading(false);
     });
   }
@@ -71,7 +71,7 @@ function App() {
         </div>
         <header>
           <h1>🐼 Panda Weather Image Generator 🐼</h1>
-          <p>Get a beautiful AI-generated image based on your current weather! 🐼</p>
+          <p className="text-yellow-400">Get a beautiful AI-generated image based on your current weather! 🐼</p>
         </header>
       </div>
       
