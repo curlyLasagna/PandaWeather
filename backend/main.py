@@ -20,7 +20,7 @@ def get_pipeline():
     dtype = torch.bfloat16 if device == "cuda" else torch.float32
 
     pipe = DiffusionPipeline.from_pretrained(
-        "SG161222/RealVisXL_V3.0_Turbo",
+        "Tongyi-MAI/Z-Image-Turbo",
         torch_dtype=dtype,
         safety_checker=None,
         requires_safety_checker=False
@@ -98,10 +98,12 @@ def generate_image():
     else:
         panda_behavior = "the panda stands naturally, calm and alert"
 
-    if "mph" in wind_speed.lower():
-        wind_strength = "strong wind"
-    else:
-        wind_strength = "gentle wind"
+    # if wind_speed > 20:
+    #     wind_strength = "strong wind"
+    # else:
+    #     wind_strength = "gentle wind"
+    #
+    wind_strength = "strong wind"
 
     if precipitation == "rain":
         environment = "wet ground, falling rain, splashing droplets, soaked fur"
